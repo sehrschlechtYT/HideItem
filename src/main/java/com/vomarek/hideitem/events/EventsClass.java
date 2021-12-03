@@ -1,15 +1,14 @@
 package com.vomarek.hideitem.events;
 
-import com.vomarek.hideitem.data.PlayerState;
 import com.vomarek.hideitem.HideItem;
+import com.vomarek.hideitem.data.PlayerState;
 import com.vomarek.hideitem.util.HidingItem;
+import com.vomarek.hideitem.util.NBTTags;
 import com.vomarek.hideitem.util.PlayerHiding;
-import com.vomarek.spigotutils.nbt.NBTTags;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,7 +21,6 @@ import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +43,6 @@ public class EventsClass implements Listener {
         } catch (final Exception ignored) {
 
         }
-
 
         if (event.getItem() == null) return;
 
@@ -88,13 +85,7 @@ public class EventsClass implements Listener {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-            new BukkitRunnable(){
-
-                @Override
-                public void run() {
-                    playerState.setPlayerState(player, "shown");
-                }
-            }.runTaskAsynchronously(plugin);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> playerState.setPlayerState(player, "shown"));
 
         } else if (state.equalsIgnoreCase("shown")){
             new PlayerHiding(plugin).hide(player);
@@ -152,7 +143,7 @@ public class EventsClass implements Listener {
 
         if (plugin.getPAPI()) name = PlaceholderAPI.setPlaceholders(player, name);
 
-        iMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        iMeta.setDisplayName(name.replace("&", "§"));
 
         hideItem.setItemMeta(iMeta);
 

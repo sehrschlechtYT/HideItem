@@ -4,7 +4,7 @@ import com.vomarek.hideitem.HideItem;
 import com.vomarek.hideitem.data.database.Database;
 import com.vomarek.hideitem.data.database.MySQL;
 import com.vomarek.hideitem.data.database.SQLite;
-import com.vomarek.spigotutils.nbt.NBTTags;
+import com.vomarek.hideitem.util.NBTTags;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -114,14 +114,12 @@ public class HideItemConfig {
                             file.renameTo(oldFile);
 
                             Reader defConfigStream = new InputStreamReader(this.plugin.getResource("config.yml"), StandardCharsets.UTF_8);
-                            if (defConfigStream != null) {
-                                YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-                                config.setDefaults(defConfig);
+                            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+                            config.setDefaults(defConfig);
 
-                                plugin.saveResource("config.yml", true);
+                            plugin.saveResource("config.yml", true);
 
-                                config.load(file);
-                            }
+                            config.load(file);
                         }
                     } else {
 
@@ -173,24 +171,18 @@ public class HideItemConfig {
         //
 
         // Hide item
-        Material hideMaterial;
+        Material hideMaterial = Material.getMaterial(config.getString("hide-item.material", "GRAY_DYE"));
+        if (hideMaterial == null) hideMaterial = Material.GRAY_DYE;
 
-        if (config.getString("hide-item.material", "INK_SACK:0").split(":").length == 2) {
-            hideMaterial = Material.getMaterial(config.getString("hide-item.material", "INK_SACK:0").split(":")[0]);
-            if (hideMaterial == null) hideMaterial = Material.INK_SACK;
-        } else {
-            hideMaterial = Material.INK_SACK;
-        }
-
-        HIDE_ITEM = new ItemStack(hideMaterial, 1, (byte) Integer.parseInt(config.getString("hide-item.material", "INK_SACK:0").split(":")[1]));
+        HIDE_ITEM = new ItemStack(hideMaterial, 1);
         ItemMeta hideItemMeta = HIDE_ITEM.getItemMeta();
 
-        hideItemMeta.setDisplayName(config.getString("hide-item.name", "&eHide Players &7(Shown)"));
+        hideItemMeta.setDisplayName(config.getString("hide-item.name", "&eHide Players &7(Shown)").replace("&", "§"));
 
         ArrayList<String> hideItemLore = (ArrayList<String>) config.getStringList("hide-item.lore");
 
         for (int i = 0; i < hideItemLore.size(); i++) {
-            hideItemLore.set(i, ChatColor.translateAlternateColorCodes('&', hideItemLore.get(i)));
+            hideItemLore.set(i, hideItemLore.get(i).replace("&", "§"));
         }
 
         hideItemMeta.setLore(hideItemLore);
@@ -204,23 +196,18 @@ public class HideItemConfig {
         HIDE_ITEM = NBTTags.setBoolean(HIDE_ITEM, "HIDE_ITEM", true);
 
         // Show Item
-        Material showMaterial;
-        if (config.getString("show-item.material", "INK_SACK:0").split(":").length == 2) {
-            showMaterial = Material.getMaterial(config.getString("show-item.material", "INK_SACK:0").split(":")[0]);
-            if (showMaterial == null) showMaterial = Material.INK_SACK;
-        } else {
-            showMaterial = Material.INK_SACK;
-        }
+        Material showMaterial = Material.getMaterial(config.getString("show-item.material", "LIME_DYE"));
+        if (showMaterial == null) showMaterial = Material.LIME_DYE;
 
-        SHOW_ITEM = new ItemStack(showMaterial, 1, (byte) Integer.parseInt(config.getString("show-item.material", "INK_SACK:0").split(":")[1]));
+        SHOW_ITEM = new ItemStack(showMaterial, 1);
         ItemMeta showItemMeta = SHOW_ITEM.getItemMeta();
 
-        showItemMeta.setDisplayName(config.getString("show-item.name", "&eHide Players &7(Hidden)"));
+        showItemMeta.setDisplayName(config.getString("show-item.name", "&eHide Players &7(Hidden)").replace("&", "§"));
 
         ArrayList<String> showItemLore = (ArrayList<String>) config.getStringList("show-item.lore");
 
         for (int i = 0; i < showItemLore.size(); i++) {
-            showItemLore.set(i, ChatColor.translateAlternateColorCodes('&', showItemLore.get(i)));
+            showItemLore.set(i, showItemLore.get(i).replace("&", "§"));
         }
 
         showItemMeta.setLore(showItemLore);
@@ -232,7 +219,7 @@ public class HideItemConfig {
         if (config.getBoolean("show-item.enchanted", false)) SHOW_ITEM.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 
-        HIDE_ITEM = NBTTags.setBoolean(HIDE_ITEM, "SHOW_ITEM", true);
+        SHOW_ITEM = NBTTags.setBoolean(SHOW_ITEM, "SHOW_ITEM", true);
 
         //
         // Other settings

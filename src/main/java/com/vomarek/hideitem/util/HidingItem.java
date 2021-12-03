@@ -1,7 +1,6 @@
 package com.vomarek.hideitem.util;
 
 import com.vomarek.hideitem.HideItem;
-import com.vomarek.spigotutils.nbt.NBTTags;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,7 +1,7 @@
 package com.vomarek.hideitem.data;
 
 public class PlayersHidden {
-    private static Integer count;
+    private static Integer count = 0;
 
     public static void add() {
         count++;
