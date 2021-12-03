@@ -9,6 +9,7 @@ import com.vomarek.hideitem.events.EventsClass;
 import com.vomarek.hideitem.util.Cooldowns;
 import com.vomarek.hideitem.util.HideItemStack;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,7 +27,6 @@ public class HideItem extends JavaPlugin {
     private YamlConfiguration data;
 
     private PlayerState playerState;
-    private PlayersHidden playersHidden;
     private Cooldowns cooldowns;
     private HideItemStack hideItemStack;
 
@@ -41,9 +41,7 @@ public class HideItem extends JavaPlugin {
 
         Metrics metrics = new Metrics(this, 7853);
 
-        if (metrics.isEnabled()) {
-            playersHidden = new PlayersHidden(metrics);
-        }
+        metrics.addCustomChart(new SingleLineChart("playersHidden", PlayersHidden::getCount));
 
         config = new HideItemConfig(plugin);
 
@@ -153,10 +151,6 @@ public class HideItem extends JavaPlugin {
 
     public Cooldowns getCooldowns() {
         return cooldowns;
-    }
-
-    public PlayersHidden getPlayersHidden() {
-        return playersHidden;
     }
 
     public HideItemStack getHideItemStack() {

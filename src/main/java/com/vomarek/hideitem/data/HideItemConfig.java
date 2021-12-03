@@ -102,11 +102,7 @@ public class HideItemConfig {
             } else {
 
                 if (!config.getString("version", "").equalsIgnoreCase(plugin.getDescription().getVersion())) {
-                    if (!config.getBoolean("rename-old-config", true)) {
-
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYou have outdated config in '/plugins/HideItem/' please update it!"));
-
-                    } else {
+                    if (config.getBoolean("rename-old-config", true)) {
                         plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYou have outdated config in '/plugins/HideItem/' New one will be created! (Your current one will be saved as config.old.yml)"));
 
                         File oldFile = new File(plugin.getDataFolder(), "config.old.yml");
@@ -127,6 +123,10 @@ public class HideItemConfig {
                                 config.load(file);
                             }
                         }
+                    } else {
+
+                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYou have outdated config in '/plugins/HideItem/' please update it!"));
+
                     }
                 }
             }
@@ -201,7 +201,7 @@ public class HideItemConfig {
 
         if (config.getBoolean("hide-item.enchanted", false)) HIDE_ITEM.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
-        HIDE_ITEM = NBTTags.addNBTTag(HIDE_ITEM, "HIDE_ITEM", true);
+        HIDE_ITEM = NBTTags.setBoolean(HIDE_ITEM, "HIDE_ITEM", true);
 
         // Show Item
         Material showMaterial;
@@ -232,7 +232,7 @@ public class HideItemConfig {
         if (config.getBoolean("show-item.enchanted", false)) SHOW_ITEM.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 
-        HIDE_ITEM = NBTTags.addNBTTag(HIDE_ITEM, "SHOW_ITEM", true);
+        HIDE_ITEM = NBTTags.setBoolean(HIDE_ITEM, "SHOW_ITEM", true);
 
         //
         // Other settings

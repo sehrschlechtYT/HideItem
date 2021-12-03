@@ -1,6 +1,7 @@
 package com.vomarek.hideitem.util;
 
 import com.vomarek.hideitem.HideItem;
+import com.vomarek.hideitem.data.PlayersHidden;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
@@ -32,7 +33,7 @@ public class PlayerHiding {
 
     @SuppressWarnings("deprecation")
     public void hideSinglePlayer(final Player player, final Player target) {
-        if (plugin.getPlayersHidden() != null) plugin.getPlayersHidden().add();
+        PlayersHidden.add();
         if (usePlugin) {
             player.hidePlayer(plugin, target);
         } else {
@@ -53,7 +54,7 @@ public class PlayerHiding {
     @SuppressWarnings("deprecation")
     public void hide(final Player player) {
         for (final Player p : plugin.getServer().getOnlinePlayers()) {
-            if (plugin.getPlayersHidden() != null) plugin.getPlayersHidden().add();
+            PlayersHidden.add();
             if (usePlugin) {
                 player.hidePlayer(plugin, p);
             } else {

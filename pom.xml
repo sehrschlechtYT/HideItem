@@ -69,10 +69,6 @@
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
         <repository>
-            <id>1vomarek1</id>
-            <url>https://repo.vomarek.com/repository/release/</url>
-        </repository>
-        <repository>
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
@@ -88,18 +84,18 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>1.7</version>
+            <version>2.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.vomarek</groupId>
             <artifactId>spigotutils</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.0.6</version>
+            <version>2.10.10</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class PlayerState {
     private HideItem plugin;
@@ -23,22 +24,24 @@ public class PlayerState {
     public PlayerState setPlayerState(Player player, String state) {
         playerStates.put(player.getName(), state);
 
-        if (STORAGE_TYPE.equalsIgnoreCase("none")) return this;
+        switch (STORAGE_TYPE.toLowerCase(Locale.ENGLISH)) {
+            case "none":
+                return this;
+            case "file":
+                if (plugin.getDataFile() == null) return this;
 
-        if (STORAGE_TYPE.equalsIgnoreCase("file")) {
-            if (plugin.getDataFile() == null) return this;
-
-            try {
-                plugin.getDataFile().set(player.getName(), state);
-                plugin.getDataFile().save(new File(plugin.getDataFolder(),"data.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (STORAGE_TYPE.equalsIgnoreCase("MySQL") || STORAGE_TYPE.equalsIgnoreCase("SQLite")) {
-            if (plugin.getHideItemConfig().DATABASE() == null) return this;
-            plugin.getHideItemConfig().DATABASE().setState(player.getUniqueId().toString(), state);
+                try {
+                    plugin.getDataFile().set(player.getName(), state);
+                    plugin.getDataFile().save(new File(plugin.getDataFolder(),"data.yml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "mysql":
+            case "sqlite":
+                if (plugin.getHideItemConfig().DATABASE() == null) return this;
+                plugin.getHideItemConfig().DATABASE().setState(player.getUniqueId().toString(), state);
+                break;
         }
 
         return this;
@@ -47,27 +50,27 @@ public class PlayerState {
     public String getPlayerState(Player player) {
         if (playerStates.containsKey(player.getName())) return playerStates.get(player.getName());
 
-        if (STORAGE_TYPE.equalsIgnoreCase("none")) return null;
+        String state;
+        switch (STORAGE_TYPE.toLowerCase(Locale.ENGLISH)) {
+            case "none":
+                return null;
+            case "file":
+                if (plugin.getDataFile() == null) return null;
 
-        if (STORAGE_TYPE.equalsIgnoreCase("file")) {
-            if (plugin.getDataFile() == null) return null;
+                state = plugin.getDataFile().getString(player.getName(), "");
 
-            final String state = plugin.getDataFile().getString(player.getName(), "");
+                if (state.equals("")) return null;
 
-            if (state.equals("")) return null;
+                return state;
+            case "mysql":
+            case "sqlite":
+                if (plugin.getHideItemConfig().DATABASE() == null) return null;
 
-            return state;
+                state = plugin.getHideItemConfig().DATABASE().getState(player.getUniqueId().toString());
 
-        }
+                if (state == null) return null;
 
-        if (STORAGE_TYPE.equalsIgnoreCase("MySQL") || STORAGE_TYPE.equalsIgnoreCase("SQLite")) {
-            if (plugin.getHideItemConfig().DATABASE() == null) return null;
-
-            final String state = plugin.getHideItemConfig().DATABASE().getState(player.getUniqueId().toString());
-
-            if (state == null) return null;
-
-            return state;
+                return state;
         }
 
         return null;

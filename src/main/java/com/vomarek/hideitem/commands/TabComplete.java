@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TabComplete implements TabCompleter {
@@ -30,7 +31,7 @@ public class TabComplete implements TabCompleter {
                     if (!plugin.getHideItemConfig().DISABLE_COMMANDS())
                         return Arrays.asList("info", "toggle", "show", "hide");
 
-                    return Arrays.asList("info");
+                    return Collections.singletonList("info");
                 }
             }
         }

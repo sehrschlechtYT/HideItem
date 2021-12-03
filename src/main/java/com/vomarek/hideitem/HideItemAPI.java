@@ -1,6 +1,7 @@
 package com.vomarek.hideitem;
 
 import com.vomarek.hideitem.util.PlayerHiding;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,23 +22,11 @@ public class HideItemAPI {
         if (hidden) {
             new PlayerHiding(plugin).hide(player);
             plugin.getHideItemStack().updateItems(player);
-            new BukkitRunnable() {
-
-                @Override
-                public void run () {
-                    plugin.getPlayerState().setPlayerState(player, "hidden");
-                }
-            }.runTaskAsynchronously(plugin);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "hidden"));
         } else {
             new PlayerHiding(plugin).show(player);
             plugin.getHideItemStack().updateItems(player);
-            new BukkitRunnable() {
-
-                @Override
-                public void run () {
-                    plugin.getPlayerState().setPlayerState(player, "shown");
-                }
-            }.runTaskAsynchronously(plugin);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "shown"));
         }
     }
 
@@ -50,13 +39,7 @@ public class HideItemAPI {
     public static void hideFor(final Player player) {
         new PlayerHiding(plugin).hide(player);
         plugin.getHideItemStack().updateItems(player);
-        new BukkitRunnable() {
-
-            @Override
-            public void run () {
-                plugin.getPlayerState().setPlayerState(player, "hidden");
-            }
-        }.runTaskAsynchronously(plugin);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "hidden"));
     }
 
     /**
@@ -69,13 +52,7 @@ public class HideItemAPI {
     public static void showFor(final Player player) {
         new PlayerHiding(plugin).show(player);
         plugin.getHideItemStack().updateItems(player);
-        new BukkitRunnable() {
-
-            @Override
-            public void run () {
-                plugin.getPlayerState().setPlayerState(player, "shown");
-            }
-        }.runTaskAsynchronously(plugin);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "shown"));
     }
 
     /**

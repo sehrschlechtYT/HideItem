@@ -1,7 +1,7 @@
 name: HideItem
 version: ${project.version}
 main: com.vomarek.hideitem.HideItem
-authors: [1vomarek1]
+authors: [sehrschlechtYT, 1vomarek1]
 commands:
   hideitem:
     description: "Default command of HideItem."
