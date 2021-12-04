@@ -1,38 +1,23 @@
 # HideItem
-**by 1vomarek1**    
-HideItem is spigot plugin used to give players option to toggle visibility of other players.  
+**by sehrschlechtYT**    
+HideItem is spigot plugin used to give players the option to toggle the visibility of other players.  
 Documentation [link](https://docs.vomarek.com/hideitem/hideitem)  
-This plugin was originally created by **qKing12** [Link](https://www.spigotmc.org/resources/hideitem-hide-players-1-8-1-15.70313/)  
+This plugin was originally created by **qKing12** [Link](https://www.spigotmc.org/resources/hideitem-hide-players-1-8-1-15.70313/) and by 1vomarek1 [Link](https://www.spigotmc.org/resources/hideitem-abandoned-1-8-1-15.80167/)
 
 ## API
 
 ### Import with maven
-To import HideItem, simply add the following code to your pom.xml
-Replace {VERSION} with the version listed at the top of this page.
-
-```
-<repositories>
-    <repository>
-        <id>1vomarek1 repo</id>
-        <url>https://repo.vomarek.com/repository/release/</url>
-    </repository>
-</repositories>
-<dependencies>
-    <dependency>
-        <groupId>com.vomarek</groupId>
-        <artifactId>hideitem</artifactId>
-        <version>{VERSION}</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-```
+To import HideItem, you currently have to build it with maven (`maven clean install`).
+The API is now in your local maven repository.
+You can use it without adding any repositories.
 
 ### Methods
 
 ```
-package com.vomarek.hideitem;
+package yt.sehrschlecht.hideitem;
 
-public class HideItem extends JavaPlugin {
+public class HideItemAPI {
+    private final static HideItem plugin = HideItem.getPlugin();
 
     /**
      * Using this method you can set visibility of other players for player.<br>
@@ -43,16 +28,30 @@ public class HideItem extends JavaPlugin {
      * @param hidden should player have hidden players?
      */
 
-    public static void setHiddenState(Player player, Boolean hidden);
-    
+    public static void setHiddenState(final Player player, final Boolean hidden) {
+        if (hidden) {
+            new PlayerHiding(plugin).hide(player);
+            plugin.getHideItemStack().updateItems(player);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.HIDDEN));
+        } else {
+            new PlayerHiding(plugin).show(player);
+            plugin.getHideItemStack().updateItems(player);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.SHOWN));
+        }
+    }
+
     /**
      * Using this method you can hide players for specific player.<br>
      * No message is sent to player!
      *
      * @param player Player who you want to hide others to
      */
-    public static void hideFor(Player player);
-    
+    public static void hideFor(final Player player) {
+        new PlayerHiding(plugin).hide(player);
+        plugin.getHideItemStack().updateItems(player);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.HIDDEN));
+    }
+
     /**
      * Using this method you can show players for specific player.<br>
      * Player will see vanished players if has hideitem.seevanished permission.<br>
@@ -60,9 +59,32 @@ public class HideItem extends JavaPlugin {
      *
      * @param player Player who you want to show others to
      */
-    public static void showFor(Player player);
+    public static void showFor(final Player player) {
+        new PlayerHiding(plugin).show(player);
+        plugin.getHideItemStack().updateItems(player);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.SHOWN));
+    }
+
+    /**
+     * With this method you can remove all hide/show items from players inventory
+     *
+     * @param player Player who you want to remove hide/show items from
+     */
+    public static void removeItems(final Player player) {
+        for (int i = 0; i < 27; i++) {
+            final ItemStack item = player.getInventory().getItem(i);
+
+            if (item == null) continue;
+            if (!plugin.getHideItemStack().isHideItem(item)) continue;
+
+            player.getInventory().removeItem(item);
+        }
+
+        player.updateInventory();
+    }
+
 }
 ```
 
 ## Support
-If you need help with HideItem you can join my [discord support server](https://discord.gg/UjQJW5Z)
+If you need help with the plugin, you can join my [discord support server](https://discord.gg/KsRHqkMn4H)
