@@ -4,6 +4,14 @@ HideItem is spigot plugin used to give players the option to toggle the visibili
 Documentation [link](https://docs.vomarek.com/hideitem/hideitem)  
 This plugin was originally created by **qKing12** [Link](https://www.spigotmc.org/resources/hideitem-hide-players-1-8-1-15.70313/) and by 1vomarek1 [Link](https://www.spigotmc.org/resources/hideitem-abandoned-1-8-1-15.80167/)
 
+###Difference between this plugin and the old plugin
+* The code is cleaner
+* Some bugs were fixed and the dependencies updated
+* A expansion for PlaceholderAPI was added
+* Support for MongoDB was added
+* All reflection code has been removed to make the plugin compatible with new spigot versions without updating it
+* The minimum server version was changed to 1.14.4
+
 ## API
 
 ### Import with maven
