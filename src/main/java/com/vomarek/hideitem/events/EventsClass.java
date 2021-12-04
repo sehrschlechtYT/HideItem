@@ -33,7 +33,7 @@ public class EventsClass implements Listener {
     }
 
     @EventHandler
-    public void onClick(final PlayerInteractEvent event) {
+    public void onInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
         try {
@@ -52,7 +52,7 @@ public class EventsClass implements Listener {
 
         event.setCancelled(true);
 
-        if (!event.getAction().equals(Action.LEFT_CLICK_AIR) && !event.getAction().equals(Action.RIGHT_CLICK_AIR) && !event.getAction().equals(Action.LEFT_CLICK_BLOCK) && !event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if(event.getAction().equals(Action.PHYSICAL)) return;
 
         if (!player.hasPermission("hideitem.toggle") && plugin.getHideItemConfig().REQUIRE_PERMISSION_FOR_ITEMS()) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getHideItemConfig().NO_PERMISSION_MESSAGE()));
@@ -268,10 +268,8 @@ public class EventsClass implements Listener {
         if(plugin.getHideItemConfig().DISABLE_ITEMS()) return;
         if(!plugin.getHideItemConfig().FIXED_ITEM()) return;
 
-        if(event.getItem() != null) {
-            if(NBTTags.getBoolean(event.getItem(), "SHOW_ITEM") || NBTTags.getBoolean(event.getItem(), "HIDE_ITEM")) {
-                event.setCancelled(true);
-            }
+        if(NBTTags.getBoolean(event.getItem(), "SHOW_ITEM") || NBTTags.getBoolean(event.getItem(), "HIDE_ITEM")) {
+            event.setCancelled(true);
         }
     }
 
