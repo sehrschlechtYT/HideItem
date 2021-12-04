@@ -104,12 +104,12 @@ public class HideItemConfig {
 
                 if (!config.getString("version", "").equalsIgnoreCase(plugin.getDescription().getVersion())) {
                     if (config.getBoolean("rename-old-config", true)) {
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYou have outdated config in '/plugins/HideItem/' New one will be created! (Your current one will be saved as config.old.yml)"));
+                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. A new one will be created! (Your current one will be saved as config.old.yml)"));
 
                         File oldFile = new File(plugin.getDataFolder(), "config.old.yml");
 
                         if (oldFile.exists()) {
-                            plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cconfig.old.yml already exists in '/plugins/HideItem/'! Please delete it so new config can be generated!"));
+                            plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cconfig.old.yml already exists in '/plugins/HideItem/'! Please delete it so the new config file can be generated!"));
 
                         } else {
                             file.renameTo(oldFile);
@@ -124,7 +124,7 @@ public class HideItemConfig {
                         }
                     } else {
 
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYou have outdated config in '/plugins/HideItem/' please update it!"));
+                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. Please update it!"));
 
                     }
                 }
