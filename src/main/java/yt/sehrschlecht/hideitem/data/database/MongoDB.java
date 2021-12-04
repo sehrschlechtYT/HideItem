@@ -1,4 +1,4 @@
-package com.vomarek.hideitem.data.database;
+package yt.sehrschlecht.hideitem.data.database;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -6,7 +6,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.vomarek.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.data.PlayerState;
 import org.bson.Document;
 import org.bukkit.configuration.file.YamlConfiguration;
 

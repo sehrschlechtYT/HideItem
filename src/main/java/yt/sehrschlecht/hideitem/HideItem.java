@@ -1,14 +1,14 @@
-package com.vomarek.hideitem;
+package yt.sehrschlecht.hideitem;
 
-import com.vomarek.hideitem.commands.Commands;
-import com.vomarek.hideitem.commands.TabComplete;
-import com.vomarek.hideitem.data.HideItemConfig;
-import com.vomarek.hideitem.data.PlayerStateManager;
-import com.vomarek.hideitem.data.PlayersHidden;
-import com.vomarek.hideitem.events.EventsClass;
-import com.vomarek.hideitem.placeholderapi.HideItemExpansion;
-import com.vomarek.hideitem.util.Cooldowns;
-import com.vomarek.hideitem.util.HideItemStack;
+import yt.sehrschlecht.hideitem.commands.Commands;
+import yt.sehrschlecht.hideitem.commands.TabComplete;
+import yt.sehrschlecht.hideitem.data.HideItemConfig;
+import yt.sehrschlecht.hideitem.data.PlayerStateManager;
+import yt.sehrschlecht.hideitem.data.PlayersHidden;
+import yt.sehrschlecht.hideitem.events.EventsClass;
+import yt.sehrschlecht.hideitem.placeholderapi.HideItemExpansion;
+import yt.sehrschlecht.hideitem.util.Cooldowns;
+import yt.sehrschlecht.hideitem.util.HideItemStack;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.ChatColor;

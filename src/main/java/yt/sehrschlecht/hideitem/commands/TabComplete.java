@@ -1,6 +1,6 @@
-package com.vomarek.hideitem.commands;
+package yt.sehrschlecht.hideitem.commands;
 
-import com.vomarek.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.HideItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

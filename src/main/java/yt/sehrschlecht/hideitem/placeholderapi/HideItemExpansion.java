@@ -1,7 +1,7 @@
-package com.vomarek.hideitem.placeholderapi;
+package yt.sehrschlecht.hideitem.placeholderapi;
 
-import com.vomarek.hideitem.HideItem;
-import com.vomarek.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.PlayerState;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

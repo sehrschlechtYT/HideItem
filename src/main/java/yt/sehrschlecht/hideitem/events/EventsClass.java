@@ -1,11 +1,11 @@
-package com.vomarek.hideitem.events;
+package yt.sehrschlecht.hideitem.events;
 
-import com.vomarek.hideitem.HideItem;
-import com.vomarek.hideitem.data.PlayerState;
-import com.vomarek.hideitem.data.PlayerStateManager;
-import com.vomarek.hideitem.util.HidingItem;
-import com.vomarek.hideitem.util.NBTTags;
-import com.vomarek.hideitem.util.PlayerHiding;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.data.PlayerStateManager;
+import yt.sehrschlecht.hideitem.util.HidingItem;
+import yt.sehrschlecht.hideitem.util.NBTTags;
+import yt.sehrschlecht.hideitem.util.PlayerHiding;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

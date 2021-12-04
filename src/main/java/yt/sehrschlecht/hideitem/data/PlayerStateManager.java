@@ -1,6 +1,6 @@
-package com.vomarek.hideitem.data;
+package yt.sehrschlecht.hideitem.data;
 
-import com.vomarek.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.HideItem;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

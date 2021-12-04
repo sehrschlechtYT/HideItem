@@ -1,7 +1,7 @@
-package com.vomarek.hideitem;
+package yt.sehrschlecht.hideitem;
 
-import com.vomarek.hideitem.data.PlayerState;
-import com.vomarek.hideitem.util.PlayerHiding;
+import yt.sehrschlecht.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.util.PlayerHiding;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

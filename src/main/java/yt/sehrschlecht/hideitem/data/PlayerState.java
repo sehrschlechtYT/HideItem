@@ -1,4 +1,4 @@
-package com.vomarek.hideitem.data;
+package yt.sehrschlecht.hideitem.data;
 
 public enum PlayerState {
     SHOWN("shown"),

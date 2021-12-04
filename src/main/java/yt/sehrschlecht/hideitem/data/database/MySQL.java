@@ -1,6 +1,6 @@
-package com.vomarek.hideitem.data.database;
+package yt.sehrschlecht.hideitem.data.database;
 
-import com.vomarek.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.data.PlayerState;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.sql.*;

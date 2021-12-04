@@ -1,4 +1,4 @@
-package com.vomarek.hideitem.data;
+package yt.sehrschlecht.hideitem.data;
 
 public class PlayersHidden {
     private static Integer count = 0;

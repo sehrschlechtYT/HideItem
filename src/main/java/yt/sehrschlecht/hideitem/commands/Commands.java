@@ -1,10 +1,10 @@
-package com.vomarek.hideitem.commands;
+package yt.sehrschlecht.hideitem.commands;
 
-import com.vomarek.hideitem.data.PlayerState;
-import com.vomarek.hideitem.data.PlayerStateManager;
-import com.vomarek.hideitem.HideItem;
-import com.vomarek.hideitem.util.HidingItem;
-import com.vomarek.hideitem.util.PlayerHiding;
+import yt.sehrschlecht.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.data.PlayerStateManager;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.util.HidingItem;
+import yt.sehrschlecht.hideitem.util.PlayerHiding;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,7 +1,7 @@
 name: HideItem
 version: ${project.version}
-main: com.vomarek.hideitem.HideItem
-authors: [sehrschlechtYT, 1vomarek1]
+main: yt.sehrschlecht.hideitem.HideItem
+author: sehrschlechtYT
 api-version: 1.14
 softdepend: [ PlaceholderAPI ]
 commands:

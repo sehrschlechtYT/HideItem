@@ -1,11 +1,11 @@
-package com.vomarek.hideitem.data;
+package yt.sehrschlecht.hideitem.data;
 
-import com.vomarek.hideitem.HideItem;
-import com.vomarek.hideitem.data.database.Database;
-import com.vomarek.hideitem.data.database.MongoDB;
-import com.vomarek.hideitem.data.database.MySQL;
-import com.vomarek.hideitem.data.database.SQLite;
-import com.vomarek.hideitem.util.NBTTags;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.database.Database;
+import yt.sehrschlecht.hideitem.data.database.MongoDB;
+import yt.sehrschlecht.hideitem.data.database.MySQL;
+import yt.sehrschlecht.hideitem.data.database.SQLite;
+import yt.sehrschlecht.hideitem.util.NBTTags;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;

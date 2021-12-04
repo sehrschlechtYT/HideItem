@@ -1,7 +1,7 @@
-package com.vomarek.hideitem.data.database;
+package yt.sehrschlecht.hideitem.data.database;
 
-import com.vomarek.hideitem.HideItem;
-import com.vomarek.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.PlayerState;
 
 import java.sql.*;
 import java.util.UUID;

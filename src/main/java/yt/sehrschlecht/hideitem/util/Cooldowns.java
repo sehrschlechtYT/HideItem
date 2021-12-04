@@ -1,6 +1,6 @@
-package com.vomarek.hideitem.util;
+package yt.sehrschlecht.hideitem.util;
 
-import com.vomarek.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.HideItem;
 
 import java.util.HashMap;
 
