@@ -6,6 +6,7 @@ import com.vomarek.hideitem.data.HideItemConfig;
 import com.vomarek.hideitem.data.PlayerState;
 import com.vomarek.hideitem.data.PlayersHidden;
 import com.vomarek.hideitem.events.EventsClass;
+import com.vomarek.hideitem.placeholderapi.HideItemExpansion;
 import com.vomarek.hideitem.util.Cooldowns;
 import com.vomarek.hideitem.util.HideItemStack;
 import org.bstats.bukkit.Metrics;
@@ -86,6 +87,10 @@ public class HideItem extends JavaPlugin {
         getCommand("hideitem").setTabCompleter(new TabComplete(plugin));
 
         plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &7| &fHideItem has been enabled!"));
+
+        if(papi) {
+            new HideItemExpansion(this).register();
+        }
     }
 
     @Override

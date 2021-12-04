@@ -1,6 +1,7 @@
 package com.vomarek.hideitem.data;
 
 import com.vomarek.hideitem.HideItem;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -47,7 +48,8 @@ public class PlayerState {
         return this;
     }
 
-    public String getPlayerState(Player player) {
+    public String getPlayerState(OfflinePlayer player) {
+        if(player.getName() == null) return null;
         if (playerStates.containsKey(player.getName())) return playerStates.get(player.getName());
 
         String state;
@@ -59,7 +61,7 @@ public class PlayerState {
 
                 state = plugin.getDataFile().getString(player.getName(), "");
 
-                if (state.equals("")) return null;
+                if (state == null || state.equals("")) return null;
 
                 return state;
             case "mysql":
