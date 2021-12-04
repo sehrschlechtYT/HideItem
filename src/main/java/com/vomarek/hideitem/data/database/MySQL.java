@@ -1,8 +1,10 @@
 package com.vomarek.hideitem.data.database;
 
+import com.vomarek.hideitem.data.PlayerState;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class MySQL implements Database {
     private Connection conn;
@@ -27,7 +29,8 @@ public class MySQL implements Database {
         createConnection();
     }
 
-    private void createConnection() {
+    @Override
+    public void createConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -48,15 +51,14 @@ public class MySQL implements Database {
 
 
     @Override
-    public void setState(String uuid, String state) {
-
+    public void setState(UUID uuid, PlayerState state) {
         try {
             if (conn.isClosed()) createConnection();
 
             final PreparedStatement stmt = conn.prepareStatement("INSERT INTO "+DATABASE+"."+TABLE+" (player, state) VALUES (?, ?) ON DUPLICATE KEY UPDATE state=?");
-            stmt.setString(1, uuid);
-            stmt.setString(2, state);
-            stmt.setString(3, state);
+            stmt.setString(1, uuid.toString());
+            stmt.setString(2, state.getId());
+            stmt.setString(3, state.getId());
 
             stmt.execute();
             stmt.close();
@@ -66,12 +68,12 @@ public class MySQL implements Database {
     }
 
     @Override
-    public String getState(String uuid) {
+    public PlayerState getState(UUID uuid) {
         try {
             if (conn.isClosed()) createConnection();
 
             final PreparedStatement stmt = conn.prepareStatement("SELECT * FROM "+DATABASE+"."+TABLE+" WHERE player=?");
-            stmt.setString(1, uuid);
+            stmt.setString(1, uuid.toString());
 
             if (!stmt.execute()) return null;
 
@@ -80,7 +82,7 @@ public class MySQL implements Database {
             while (results.next()) {
                 if (results.getString("state") == null) continue;
 
-                return results.getString("state");
+                return PlayerState.valueOf(results.getString("state"));
             }
             stmt.close();
         } catch (SQLException e) {
@@ -89,11 +91,11 @@ public class MySQL implements Database {
         return null;
     }
 
-    public void close () {
+    public void close() {
         try {
             if (!conn.isClosed()) conn.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 }

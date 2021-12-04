@@ -41,7 +41,7 @@ public class PlayerStateManager {
             case "mysql":
             case "sqlite":
                 if (plugin.getHideItemConfig().DATABASE() == null) return this;
-                plugin.getHideItemConfig().DATABASE().setState(player.getUniqueId().toString(), state.toString());
+                plugin.getHideItemConfig().DATABASE().setState(player.getUniqueId(), state);
                 break;
         }
 
@@ -52,27 +52,27 @@ public class PlayerStateManager {
         if(player.getName() == null) return null;
         if (playerStates.containsKey(player.getName())) return playerStates.get(player.getName());
 
-        String state;
+        PlayerState state;
         switch (STORAGE_TYPE.toLowerCase(Locale.ENGLISH)) {
             case "none":
                 return null;
             case "file":
                 if (plugin.getDataFile() == null) return null;
 
-                state = plugin.getDataFile().getString(player.getName(), "");
+                if(plugin.getDataFile().getString(player.getName()) == null) return null;
 
-                if (state == null || state.equals("")) return null;
+                state = PlayerState.valueOf(plugin.getDataFile().getString(player.getName(), ""));
 
-                return PlayerState.valueOf(state);
+                return state;
             case "mysql":
             case "sqlite":
                 if (plugin.getHideItemConfig().DATABASE() == null) return null;
 
-                state = plugin.getHideItemConfig().DATABASE().getState(player.getUniqueId().toString());
+                state = plugin.getHideItemConfig().DATABASE().getState(player.getUniqueId());
 
                 if (state == null) return null;
 
-                return PlayerState.valueOf(state);
+                return state;
         }
 
         return null;

@@ -1,21 +1,24 @@
 package com.vomarek.hideitem.data.database;
 
 import com.vomarek.hideitem.HideItem;
+import com.vomarek.hideitem.data.PlayerState;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class SQLite implements Database {
     private HideItem plugin;
 
     private Connection connection;
 
-    public SQLite (final HideItem plugin) {
+    public SQLite(final HideItem plugin) {
         this.plugin = plugin;
 
         createConnection();
     }
 
-    private void createConnection () {
+    @Override
+    public void createConnection() {
         try {
 
             connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/data.db");
@@ -32,14 +35,14 @@ public class SQLite implements Database {
     }
 
     @Override
-    public void setState(String uuid, String state) {
+    public void setState(UUID uuid, PlayerState state) {
         try {
             if (connection.isClosed()) createConnection();
 
             final PreparedStatement statement = connection.prepareStatement("INSERT OR REPLACE INTO HideItem (player, state) VALUES (?, ?)");
 
-            statement.setString(1, uuid);
-            statement.setString(2, state);
+            statement.setString(1, uuid.toString());
+            statement.setString(2, state.getId());
 
             statement.execute();
 
@@ -50,12 +53,12 @@ public class SQLite implements Database {
     }
 
     @Override
-    public String getState(String uuid) {
+    public PlayerState getState(UUID uuid) {
         try {
             if (connection.isClosed()) createConnection();
 
             final PreparedStatement statement = connection.prepareStatement("SELECT * FROM HideItem WHERE player=?");
-            statement.setString(1, uuid);
+            statement.setString(1, uuid.toString());
 
             if (!statement.execute()) return null;
 
@@ -64,7 +67,7 @@ public class SQLite implements Database {
             while (results.next()) {
                 if (results.getString("state") == null) continue;
 
-                return results.getString("state");
+                return PlayerState.valueOf(results.getString("state"));
             }
 
             statement.close();
@@ -74,7 +77,7 @@ public class SQLite implements Database {
         return null;
     }
 
-    public void close () {
+    public void close() {
         try {
             if (!connection.isClosed()) connection.close();
         } catch (SQLException exception) {

@@ -1,11 +1,17 @@
 package com.vomarek.hideitem.data.database;
 
 
+import com.vomarek.hideitem.data.PlayerState;
+
+import java.util.UUID;
+
 public interface Database {
 
-    void setState(String uuid, String state);
+    void setState(UUID uuid, PlayerState state);
 
-    String getState(String uuid);
+    PlayerState getState(UUID uuid);
+
+    void createConnection();
 
     void close();
 }

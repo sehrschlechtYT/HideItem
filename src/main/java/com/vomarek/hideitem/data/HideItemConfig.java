@@ -2,6 +2,7 @@ package com.vomarek.hideitem.data;
 
 import com.vomarek.hideitem.HideItem;
 import com.vomarek.hideitem.data.database.Database;
+import com.vomarek.hideitem.data.database.MongoDB;
 import com.vomarek.hideitem.data.database.MySQL;
 import com.vomarek.hideitem.data.database.SQLite;
 import com.vomarek.hideitem.util.NBTTags;
@@ -159,10 +160,11 @@ public class HideItemConfig {
         }
 
         // Setup MySQL if storage method is database
-        if (STORAGE_METHOD.equals("mysql")) database = new MySQL(config);
-        if (STORAGE_METHOD.equals("sqlite")) database = new SQLite(plugin);
+        if(STORAGE_METHOD.equals("mysql")) database = new MySQL(config);
+        if(STORAGE_METHOD.equals("sqlite")) database = new SQLite(plugin);
+        if(STORAGE_METHOD.equals("mongodb")) database = new MongoDB(config);
 
-        // Disabled feartures
+        // Disabled features
         DISABLE_ITEMS = config.getBoolean("disable-items", false);
         DISABLE_COMMANDS = config.getBoolean("disable-commands", false);
 
@@ -272,7 +274,7 @@ public class HideItemConfig {
     }
 
     //
-    // Disabled feartures
+    // Disabled features
     //
     public Boolean DISABLE_ITEMS() {
         return DISABLE_ITEMS;
