@@ -159,7 +159,7 @@ public class HideItemConfig {
         }
 
         // Setup MySQL if storage method is database
-        if (STORAGE_METHOD.equals("mysql")) database = new MySQL(plugin, config);
+        if (STORAGE_METHOD.equals("mysql")) database = new MySQL(config);
         if (STORAGE_METHOD.equals("sqlite")) database = new SQLite(plugin);
 
         // Disabled feartures

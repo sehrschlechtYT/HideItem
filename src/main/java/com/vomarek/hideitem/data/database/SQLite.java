@@ -7,22 +7,20 @@ import java.sql.*;
 public class SQLite implements Database {
     private HideItem plugin;
 
-    private Connection conn;
+    private Connection connection;
 
     public SQLite (final HideItem plugin) {
-
         this.plugin = plugin;
 
         createConnection();
-
     }
 
     private void createConnection () {
         try {
 
-            conn = DriverManager.getConnection("jdbc:sqlite:"+plugin.getDataFolder()+"/data.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/data.db");
 
-            final Statement stmt = conn.createStatement();
+            final Statement stmt = connection.createStatement();
 
             final String sql = "CREATE TABLE IF NOT EXISTS HideItem (player VARCHAR(36) NOT NULL, state VARCHAR(16) , PRIMARY KEY ( player ))";
             stmt.executeUpdate(sql);
@@ -36,16 +34,16 @@ public class SQLite implements Database {
     @Override
     public void setState(String uuid, String state) {
         try {
-            if (conn.isClosed()) createConnection();
+            if (connection.isClosed()) createConnection();
 
-            final PreparedStatement stmt = conn.prepareStatement("INSERT OR REPLACE INTO HideItem (player, state) VALUES (?, ?)");
+            final PreparedStatement statement = connection.prepareStatement("INSERT OR REPLACE INTO HideItem (player, state) VALUES (?, ?)");
 
-            stmt.setString(1, uuid);
-            stmt.setString(2, state);
+            statement.setString(1, uuid);
+            statement.setString(2, state);
 
-            stmt.execute();
+            statement.execute();
 
-            stmt.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,16 +51,15 @@ public class SQLite implements Database {
 
     @Override
     public String getState(String uuid) {
-
         try {
-            if (conn.isClosed()) createConnection();
+            if (connection.isClosed()) createConnection();
 
-            final PreparedStatement stmt = conn.prepareStatement("SELECT * FROM HideItem WHERE player=?");
-            stmt.setString(1, uuid);
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM HideItem WHERE player=?");
+            statement.setString(1, uuid);
 
-            if (!stmt.execute()) return null;
+            if (!statement.execute()) return null;
 
-            ResultSet results = stmt.getResultSet();
+            ResultSet results = statement.getResultSet();
 
             while (results.next()) {
                 if (results.getString("state") == null) continue;
@@ -70,7 +67,7 @@ public class SQLite implements Database {
                 return results.getString("state");
             }
 
-            stmt.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,9 +76,9 @@ public class SQLite implements Database {
 
     public void close () {
         try {
-            if (!conn.isClosed()) conn.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if (!connection.isClosed()) connection.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 }

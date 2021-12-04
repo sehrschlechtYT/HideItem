@@ -1,6 +1,5 @@
 package com.vomarek.hideitem.data.database;
 
-import com.vomarek.hideitem.HideItem;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.sql.*;
@@ -15,7 +14,7 @@ public class MySQL implements Database {
     private final String DATABASE;
     private final String TABLE;
 
-    public MySQL(final HideItem plugin, final YamlConfiguration config) {
+    public MySQL(final YamlConfiguration config) {
 
         HOST = config.getString("mysql.host", "localhost");
         PORT = config.getInt("mysql.port", 3306);
