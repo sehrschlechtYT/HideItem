@@ -34,7 +34,7 @@ public class HideItemStack {
         if (state == null) plugin.getPlayerState().setPlayerState(player, plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN);
         if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN;
 
-        final boolean hidden = state.equals("hidden");
+        final boolean hidden = state.equals(PlayerState.HIDDEN);
 
         for (int i = 0; i < 27; i++) {
             final ItemStack item = player.getInventory().getItem(i);
