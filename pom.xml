@@ -6,7 +6,7 @@
 
     <groupId>com.vomarek</groupId>
     <artifactId>hideitem</artifactId>
-    <version>3.1.0</version>
+    <version>4.0</version>
     <packaging>jar</packaging>
 
     <name>HideItem</name>

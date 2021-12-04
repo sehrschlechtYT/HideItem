@@ -260,7 +260,7 @@ public class HideItemConfig {
         //
 
         REQUIRE_PERMISSION_FOR_COMMANDS = config.getBoolean("require-permission-for-commands", false);
-        REQUIRE_PERMISSION_FOR_ITEMS = config.getBoolean("require-permission-for-itmes", false);
+        REQUIRE_PERMISSION_FOR_ITEMS = config.getBoolean("require-permission-for-items", false);
 
         //
         // Other settings

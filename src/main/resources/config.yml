@@ -6,11 +6,12 @@
 #    ╚═╝░░╚═╝╚═╝╚═════╝░╚══════╝╚═╝░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝
 #
 #    HideItem | Configuration
-#    by 1vomarek1
+#    by sehrschlechtYT
 #
-#    Special thanks to qKing12 for giving me source code of his HideItem and letting me re-code it
+#    This plugin was originally coded by qKing12 and 1vomarek1.
 #    v1.0 - 2.5.2 | qKing12
 #    v3.0 | 1vomarek1
+#    v4.0 - current version | sehrschlechtYT
 #
 #    About:
 #    | What is HideItem?
@@ -18,7 +19,7 @@
 #     Plugins like HideItem are usually used on lobbies.
 #
 #    | Does HideItem support vanish plugins?
-#     Yes, HideItem does support plugins like PremiumVanish, SuperVanish, VanishNoPacket
+#     Yes, HideItem supports plugins like PremiumVanish, SuperVanish, VanishNoPacket
 
 # please do NOT modify this option
 version: ${project.version}
@@ -27,13 +28,13 @@ version: ${project.version}
 # |                                                                                              | #
 # |                                       STORAGE SETTINGS                                       | #
 # |                                                                                              | #
-# |                            Controls of storage method of HideItem                            | #
+# |                       Controls how HideItem stores the player hide states                    | #
 # |                                                                                              | #
 # +----------------------------------------------------------------------------------------------+ #
 #
-#  Storage method can be either MySQL or File
+#  Storage method can be MySQL, File or MongoDB
 #
-# Storage method can also be set to none in case you don't want to save player data
+# The storage method can also be set to none in case you don't want to save the player states.
 #
 # Possible options:
 #   MySQL | Data will be saved to a remote MySQL database
@@ -75,12 +76,12 @@ mongodb:
 # +----------------------------------------------------------------------------------------------+ #
 
 # Reqiore permission to use items to toggle players (hideitem.toggle)
-require-permission-for-itmes: false
+require-permission-for-items: false
 
 # What slot should Hide item be? (Starts at 1 & ends at 9)
 slot: 9
 
-# if you set this to true it will put the item in the first free slot  (disables slot feature)
+# if you set this to true it will put the item in the first free slot (disables slot feature)
 first-free-slot: false
 
 # If set to true item can't be dropped or moved inside of inventory
@@ -90,7 +91,7 @@ fixed-item: true
 hide-item:
   # Material has format <material>:<data>
   # Usually you want to have data set to 0 unless you are using colored items, dyes ect.
-  # Material is spigot material Find it here: (1.12: https://helpch.at/docs/1.12.2/org/bukkit/Material.html, 1.15.1: https://helpch.at/docs/1.15.1/org/bukkit/Material.html)
+  # Material is spigot material Find it here: (1.14.4:https://helpch.at/docs/1.14.4/org/bukkit/Material.html, 1.18: https://helpch.at/docs/1.18/org/bukkit/Material.html)
   material: "LIME_DYE"
   name: "&eHide Players &7(Shown)"
   lore:
