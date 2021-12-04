@@ -37,13 +37,7 @@ public class EventsClass implements Listener {
     public void onInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        try {
-            if (Integer.parseInt(plugin.getServer().getBukkitVersion().split("\\.")[1]) > 8) {
-                if (event.getHand() != null && !event.getHand().equals(EquipmentSlot.HAND)) return;
-            }
-        } catch (final Exception ignored) {
-
-        }
+        if (event.getHand() != null && !event.getHand().equals(EquipmentSlot.HAND)) return;
 
         if (event.getItem() == null) return;
 
@@ -102,20 +96,9 @@ public class EventsClass implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onInteractEntity(final PlayerInteractEntityEvent event){
-        ItemStack i;
-        try {
+        ItemStack stack  = event.getPlayer().getInventory().getItemInMainHand();
 
-            if (Integer.parseInt(plugin.getServer().getBukkitVersion().split("\\.")[1]) > 8) {
-                i = event.getPlayer().getInventory().getItemInMainHand();
-            } else {
-                i = event.getPlayer().getInventory().getItemInHand();
-            }
-
-        } catch (NumberFormatException ignored) {
-            i = event.getPlayer().getInventory().getItemInHand();
-        }
-
-        if (NBTTags.getBoolean(i, "SHOW_ITEM") || NBTTags.getBoolean(i, "HIDE_ITEM")) event.setCancelled(true);
+        if (NBTTags.getBoolean(stack, "SHOW_ITEM") || NBTTags.getBoolean(stack, "HIDE_ITEM")) event.setCancelled(true);
     }
 
 
