@@ -1,10 +1,10 @@
 package com.vomarek.hideitem;
 
+import com.vomarek.hideitem.data.PlayerState;
 import com.vomarek.hideitem.util.PlayerHiding;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class HideItemAPI {
     private final static HideItem plugin = HideItem.getPlugin();
@@ -22,11 +22,11 @@ public class HideItemAPI {
         if (hidden) {
             new PlayerHiding(plugin).hide(player);
             plugin.getHideItemStack().updateItems(player);
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "hidden"));
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.HIDDEN));
         } else {
             new PlayerHiding(plugin).show(player);
             plugin.getHideItemStack().updateItems(player);
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "shown"));
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.SHOWN));
         }
     }
 
@@ -39,7 +39,7 @@ public class HideItemAPI {
     public static void hideFor(final Player player) {
         new PlayerHiding(plugin).hide(player);
         plugin.getHideItemStack().updateItems(player);
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "hidden"));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.HIDDEN));
     }
 
     /**
@@ -52,7 +52,7 @@ public class HideItemAPI {
     public static void showFor(final Player player) {
         new PlayerHiding(plugin).show(player);
         plugin.getHideItemStack().updateItems(player);
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, "shown"));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getPlayerState().setPlayerState(player, PlayerState.SHOWN));
     }
 
     /**
@@ -61,9 +61,6 @@ public class HideItemAPI {
      * @param player Player who you want to remove hide/show items from
      */
     public static void removeItems(final Player player) {
-        final ItemStack hideitem = plugin.getHideItemConfig().HIDE_ITEM();
-        final ItemStack showitem = plugin.getHideItemConfig().SHOW_ITEM();
-
         for (int i = 0; i < 27; i++) {
             final ItemStack item = player.getInventory().getItem(i);
 

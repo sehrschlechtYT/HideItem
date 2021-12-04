@@ -1,6 +1,7 @@
 package com.vomarek.hideitem.commands;
 
 import com.vomarek.hideitem.data.PlayerState;
+import com.vomarek.hideitem.data.PlayerStateManager;
 import com.vomarek.hideitem.HideItem;
 import com.vomarek.hideitem.util.HidingItem;
 import com.vomarek.hideitem.util.PlayerHiding;
@@ -9,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class Commands implements CommandExecutor {
 
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
 
         if (command.getName().equalsIgnoreCase("HideItem")) {
 
@@ -69,14 +71,14 @@ public class Commands implements CommandExecutor {
 
         plugin.getCooldowns().setCooldown(player.getUniqueId().toString());
 
-        final PlayerState playerState = plugin.getPlayerState();
-        String state = playerState.getPlayerState(player);
+        final PlayerStateManager playerState = plugin.getPlayerState();
+        PlayerState state = playerState.getPlayerState(player);
 
 
-        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden";
+        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN;
 
 
-        if (state.equalsIgnoreCase("hidden")) {
+        if (state.equals(PlayerState.HIDDEN)) {
 
             new PlayerHiding(plugin).show(player);
 
@@ -85,9 +87,9 @@ public class Commands implements CommandExecutor {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-            playerState.setPlayerState(player, "shown");
+            playerState.setPlayerState(player, PlayerState.SHOWN);
 
-        } else if (state.equalsIgnoreCase("shown")){
+        } else if (state.equals(PlayerState.SHOWN)){
 
             new PlayerHiding(plugin).hide(player);
 
@@ -96,7 +98,7 @@ public class Commands implements CommandExecutor {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveShowItem(player);
 
-            playerState.setPlayerState(player, "hidden");
+            playerState.setPlayerState(player, PlayerState.HIDDEN);
         }
 
         return true;
@@ -112,14 +114,14 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
-        final PlayerState playerState = plugin.getPlayerState();
-        String state = playerState.getPlayerState(player);
+        final PlayerStateManager playerState = plugin.getPlayerState();
+        PlayerState state = playerState.getPlayerState(player);
 
 
-        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden";
+        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN;
 
 
-        if (state.equalsIgnoreCase("hidden")) {
+        if (state.equals(PlayerState.HIDDEN)) {
 
             new PlayerHiding(plugin).show(player);
 
@@ -128,9 +130,9 @@ public class Commands implements CommandExecutor {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-            playerState.setPlayerState(player, "shown");
+            playerState.setPlayerState(player, PlayerState.SHOWN);
 
-        } else if (state.equalsIgnoreCase("shown")){
+        } else if (state.equals(PlayerState.SHOWN)){
 
             new PlayerHiding(plugin).hide(player);
 
@@ -139,7 +141,7 @@ public class Commands implements CommandExecutor {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveShowItem(player);
 
-            playerState.setPlayerState(player, "hidden");
+            playerState.setPlayerState(player, PlayerState.HIDDEN);
         }
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getHideItemConfig().TOGGLED_FOR_MESSAGE()).replace("%player%", player.getDisplayName()));
@@ -166,7 +168,7 @@ public class Commands implements CommandExecutor {
 
         plugin.getCooldowns().setCooldown(player.getUniqueId().toString());
 
-        PlayerState playerState = plugin.getPlayerState();
+        PlayerStateManager playerState = plugin.getPlayerState();
 
         new PlayerHiding(plugin).show(player);
 
@@ -174,7 +176,7 @@ public class Commands implements CommandExecutor {
 
         if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-        playerState.setPlayerState(player, "shown");
+        playerState.setPlayerState(player, PlayerState.SHOWN);
 
         return true;
     }
@@ -189,7 +191,7 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
-        PlayerState playerState = plugin.getPlayerState();
+        PlayerStateManager playerState = plugin.getPlayerState();
 
         new PlayerHiding(plugin).show(player);
 
@@ -197,7 +199,7 @@ public class Commands implements CommandExecutor {
 
         if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-        playerState.setPlayerState(player, "shown");
+        playerState.setPlayerState(player, PlayerState.SHOWN);
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getHideItemConfig().SHOWN_FOR_MESSAGE()).replace("%player%", player.getDisplayName()));
 
@@ -223,7 +225,7 @@ public class Commands implements CommandExecutor {
 
         plugin.getCooldowns().setCooldown(player.getUniqueId().toString());
 
-        PlayerState playerState = plugin.getPlayerState();
+        PlayerStateManager playerState = plugin.getPlayerState();
 
         new PlayerHiding(plugin).hide(player);
 
@@ -231,7 +233,7 @@ public class Commands implements CommandExecutor {
 
         if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveShowItem(player);
 
-        playerState.setPlayerState(player, "hidden");
+        playerState.setPlayerState(player, PlayerState.HIDDEN);
 
         return true;
     }
@@ -246,7 +248,7 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
-        PlayerState playerState = plugin.getPlayerState();
+        PlayerStateManager playerState = plugin.getPlayerState();
 
         new PlayerHiding(plugin).hide(player);
 
@@ -254,7 +256,7 @@ public class Commands implements CommandExecutor {
 
         if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-        playerState.setPlayerState(player, "hidden");
+        playerState.setPlayerState(player, PlayerState.HIDDEN);
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getHideItemConfig().HIDDEN_FOR_MESSAGE()).replace("%player%", player.getDisplayName()));
 

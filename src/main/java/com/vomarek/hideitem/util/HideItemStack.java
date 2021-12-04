@@ -1,6 +1,7 @@
 package com.vomarek.hideitem.util;
 
 import com.vomarek.hideitem.HideItem;
+import com.vomarek.hideitem.data.PlayerState;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,10 +29,10 @@ public class HideItemStack {
      */
     public void updateItems(final Player player) {
 
-        String state = plugin.getPlayerState().getPlayerState(player);
+        PlayerState state = plugin.getPlayerState().getPlayerState(player);
 
-        if (state == null) plugin.getPlayerState().setPlayerState(player, plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden");
-        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden";
+        if (state == null) plugin.getPlayerState().setPlayerState(player, plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN);
+        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN;
 
         final boolean hidden = state.equals("hidden");
 

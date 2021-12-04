@@ -1,6 +1,7 @@
 package com.vomarek.hideitem.placeholderapi;
 
 import com.vomarek.hideitem.HideItem;
+import com.vomarek.hideitem.data.PlayerState;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -34,8 +35,8 @@ public class HideItemExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, @NotNull String params) {
         if(params.equalsIgnoreCase("state")) {
             if(player == null) return "";
-            String state = plugin.getPlayerState().getPlayerState(player);
-            return state == null ? "" : state;
+            PlayerState state = plugin.getPlayerState().getPlayerState(player);
+            return state == null ? "" : state.getId();
         }
         if(params.startsWith("state_")) {
             if(player == null) return "";
@@ -43,8 +44,8 @@ public class HideItemExpansion extends PlaceholderExpansion {
             if(args.length == 2) {
                 OfflinePlayer target = Arrays.stream(Bukkit.getOfflinePlayers()).filter(p -> p.getName() != null && p.getName().equalsIgnoreCase(args[1])).findFirst().orElse(null);
                 if(target == null) return "";
-                String state = plugin.getPlayerState().getPlayerState(player);
-                return state == null ? "" : state;
+                PlayerState state = plugin.getPlayerState().getPlayerState(player);
+                return state == null ? "" : state.getId();
             }
         }
         return null;

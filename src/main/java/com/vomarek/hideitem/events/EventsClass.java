@@ -2,6 +2,7 @@ package com.vomarek.hideitem.events;
 
 import com.vomarek.hideitem.HideItem;
 import com.vomarek.hideitem.data.PlayerState;
+import com.vomarek.hideitem.data.PlayerStateManager;
 import com.vomarek.hideitem.util.HidingItem;
 import com.vomarek.hideitem.util.NBTTags;
 import com.vomarek.hideitem.util.PlayerHiding;
@@ -67,15 +68,15 @@ public class EventsClass implements Listener {
         plugin.getCooldowns().setCooldown(player.getUniqueId().toString());
 
 
-        final PlayerState playerState = plugin.getPlayerState();
-        String state = playerState.getPlayerState(player);
+        final PlayerStateManager playerState = plugin.getPlayerState();
+        PlayerState state = playerState.getPlayerState(player);
 
 
-        if (state == null) playerState.setPlayerState(player, plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden");
-        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? "shown" : "hidden";
+        if (state == null) playerState.setPlayerState(player, plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN);
+        if (state == null) state = plugin.getHideItemConfig().DEFAULT_SHOWN() ? PlayerState.SHOWN : PlayerState.HIDDEN;
 
 
-        if (state.equalsIgnoreCase("hidden")) {
+        if (state.equals(PlayerState.HIDDEN)) {
 
             new PlayerHiding(plugin).show(player);
 
@@ -85,16 +86,16 @@ public class EventsClass implements Listener {
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveHideItem(player);
 
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> playerState.setPlayerState(player, "shown"));
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> playerState.setPlayerState(player, PlayerState.SHOWN));
 
-        } else if (state.equalsIgnoreCase("shown")){
+        } else if (state.equals(PlayerState.SHOWN)) {
             new PlayerHiding(plugin).hide(player);
 
             event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getHideItemConfig().HIDE_MESSAGE()));
 
             if (!plugin.getHideItemConfig().DISABLE_ITEMS()) new HidingItem(plugin).giveShowItem(player);
 
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> playerState.setPlayerState(player, "hidden"));
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> playerState.setPlayerState(player, PlayerState.HIDDEN));
         }
     }
 
@@ -122,11 +123,11 @@ public class EventsClass implements Listener {
     public void onJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
 
-        final String state = plugin.getPlayerState().getPlayerState(player);
+        final PlayerState state = plugin.getPlayerState().getPlayerState(player);
 
         boolean hasHiddenPlayers;
 
-        if (Arrays.asList("hidden", "shown").contains(state)) hasHiddenPlayers = state.equalsIgnoreCase("hidden"); else hasHiddenPlayers = !plugin.getHideItemConfig().DEFAULT_SHOWN();
+        if (Arrays.asList(PlayerState.values()).contains(state)) hasHiddenPlayers = state.equals(PlayerState.HIDDEN); else hasHiddenPlayers = !plugin.getHideItemConfig().DEFAULT_SHOWN();
 
         final ItemStack hideItem = hasHiddenPlayers ? plugin.getHideItemConfig().SHOW_ITEM() : plugin.getHideItemConfig().HIDE_ITEM();
 
@@ -168,16 +169,15 @@ public class EventsClass implements Listener {
         final Player player = event.getPlayer();
 
         for (final Player p : plugin.getServer().getOnlinePlayers()) {
-            final String state = plugin.getPlayerState().getPlayerState(p);
+            final PlayerState state = plugin.getPlayerState().getPlayerState(p);
 
             if (state == null) continue;
 
-            if (state.equalsIgnoreCase("hidden")) {
+            if(state.equals(PlayerState.HIDDEN)) {
                 new PlayerHiding(plugin).hideSinglePlayer(p, player);
-            } else if (state.equalsIgnoreCase("shown")) {
+            } else if(state.equals(PlayerState.SHOWN)) {
                 new PlayerHiding(plugin).showSinglePlayer(p, player);
             }
-            
         }
 
     }
@@ -220,11 +220,11 @@ public class EventsClass implements Listener {
 
         final Player player = event.getPlayer();
 
-        final String state = plugin.getPlayerState().getPlayerState(player);
+        final PlayerState state = plugin.getPlayerState().getPlayerState(player);
 
         boolean hasHiddenPlayers;
 
-        if (Arrays.asList("hidden", "shown").contains(state)) hasHiddenPlayers = state.equalsIgnoreCase("hidden"); else hasHiddenPlayers = !plugin.getHideItemConfig().DEFAULT_SHOWN();
+        if (Arrays.asList(PlayerState.values()).contains(state)) hasHiddenPlayers = state.equals(PlayerState.HIDDEN); else hasHiddenPlayers = !plugin.getHideItemConfig().DEFAULT_SHOWN();
 
         final ItemStack hideItem = hasHiddenPlayers ? plugin.getHideItemConfig().SHOW_ITEM() : plugin.getHideItemConfig().HIDE_ITEM();
 

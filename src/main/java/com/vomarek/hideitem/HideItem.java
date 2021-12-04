@@ -3,7 +3,7 @@ package com.vomarek.hideitem;
 import com.vomarek.hideitem.commands.Commands;
 import com.vomarek.hideitem.commands.TabComplete;
 import com.vomarek.hideitem.data.HideItemConfig;
-import com.vomarek.hideitem.data.PlayerState;
+import com.vomarek.hideitem.data.PlayerStateManager;
 import com.vomarek.hideitem.data.PlayersHidden;
 import com.vomarek.hideitem.events.EventsClass;
 import com.vomarek.hideitem.placeholderapi.HideItemExpansion;
@@ -27,7 +27,7 @@ public class HideItem extends JavaPlugin {
     private HideItemConfig config;
     private YamlConfiguration data;
 
-    private PlayerState playerState;
+    private PlayerStateManager playerState;
     private Cooldowns cooldowns;
     private HideItemStack hideItemStack;
 
@@ -78,7 +78,7 @@ public class HideItem extends JavaPlugin {
 
         } else data = null;
 
-        playerState = new PlayerState(plugin);
+        playerState = new PlayerStateManager(plugin);
         hideItemStack = new HideItemStack(plugin);
 
         cooldowns = new Cooldowns(plugin);
@@ -124,7 +124,7 @@ public class HideItem extends JavaPlugin {
     }
 
     public void configReloaded() {
-        playerState = new PlayerState(plugin);
+        playerState = new PlayerStateManager(plugin);
 
 
         if (config.STORAGE_METHOD().equalsIgnoreCase("file")) {
@@ -150,7 +150,7 @@ public class HideItem extends JavaPlugin {
 
     //region Plugins data
 
-    public PlayerState getPlayerState() {
+    public PlayerStateManager getPlayerState() {
         return playerState;
     }
 
