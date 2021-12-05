@@ -40,7 +40,7 @@ public class HideItem extends JavaPlugin {
         if (papi) getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &7|&b PlaceholderAPI&f found!"));
         else getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &7|&b PlaceholderAPI&c not found&f! If you wish to use placeholders download it!"));
 
-        Metrics metrics = new Metrics(this, 7853);
+        Metrics metrics = new Metrics(this, 13507);
 
         metrics.addCustomChart(new SingleLineChart("playersHidden", PlayersHidden::getCount));
 

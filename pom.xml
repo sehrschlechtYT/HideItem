@@ -43,7 +43,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>com.vomarek.hideitem</shadedPattern>
+                                    <shadedPattern>yt.sehrschlecht.hideitem</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
