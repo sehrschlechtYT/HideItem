@@ -32,14 +32,13 @@ version: ${project.version}
 # |                                                                                              | #
 # +----------------------------------------------------------------------------------------------+ #
 #
-#  Storage method can be MySQL, File or MongoDB
+#  Storage method can be MySQL or File
 #
 # The storage method can also be set to none in case you don't want to save the player states.
 #
 # Possible options:
 #   MySQL | Data will be saved to a remote MySQL database
 #   SQLite | Data will be saved to a local file (/plugins/HideItem/data.db)
-#   MongoDB | Data will be saved to a remote MongoDB database
 #   File | Data will be saved to the data.yml file
 #   none | Data won't be saved (after restart/reconnect the plugin won't remember the player hide states)
 #
@@ -55,18 +54,6 @@ mysql:
   database: "HideItem"
   table: "HideItem"
   user: "root"
-  password: ""
-
-#
-# MongoDB settings (Ignore if not using MongoDB storage method)
-#   !!!        Using root user is not recommended        !!!
-#
-mongodb:
-  host: "localhost"
-  port: 27017
-  database: "hideItem"
-  collection: "playerStates"
-  username: "root"
   password: ""
 
 # +----------------------------------------------------------------------------------------------+ #

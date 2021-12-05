@@ -1,11 +1,5 @@
 package yt.sehrschlecht.hideitem.data;
 
-import yt.sehrschlecht.hideitem.HideItem;
-import yt.sehrschlecht.hideitem.data.database.Database;
-import yt.sehrschlecht.hideitem.data.database.MongoDB;
-import yt.sehrschlecht.hideitem.data.database.MySQL;
-import yt.sehrschlecht.hideitem.data.database.SQLite;
-import yt.sehrschlecht.hideitem.util.NBTTags;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -14,6 +8,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.database.Database;
+import yt.sehrschlecht.hideitem.data.database.MySQL;
+import yt.sehrschlecht.hideitem.data.database.SQLite;
+import yt.sehrschlecht.hideitem.util.NBTTags;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,33 +99,28 @@ public class HideItemConfig {
                     config.load(file);
                 }
 
-            } else {
+            } else if (!config.getString("version", "").equalsIgnoreCase(plugin.getDescription().getVersion())) {
+                if (config.getBoolean("rename-old-config", true)) {
+                    plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. A new one will be created! (Your current one will be saved as config.old.yml)"));
 
-                if (!config.getString("version", "").equalsIgnoreCase(plugin.getDescription().getVersion())) {
-                    if (config.getBoolean("rename-old-config", true)) {
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. A new one will be created! (Your current one will be saved as config.old.yml)"));
+                    File oldFile = new File(plugin.getDataFolder(), "config.old.yml");
 
-                        File oldFile = new File(plugin.getDataFolder(), "config.old.yml");
+                    if (oldFile.exists()) {
+                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cconfig.old.yml already exists in '/plugins/HideItem/'! Please delete it so the new config file can be generated!"));
 
-                        if (oldFile.exists()) {
-                            plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cconfig.old.yml already exists in '/plugins/HideItem/'! Please delete it so the new config file can be generated!"));
-
-                        } else {
-                            file.renameTo(oldFile);
-
-                            Reader defConfigStream = new InputStreamReader(this.plugin.getResource("config.yml"), StandardCharsets.UTF_8);
-                            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-                            config.setDefaults(defConfig);
-
-                            plugin.saveResource("config.yml", true);
-
-                            config.load(file);
-                        }
                     } else {
+                        file.renameTo(oldFile);
 
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. Please update it!"));
+                        Reader defConfigStream = new InputStreamReader(this.plugin.getResource("config.yml"), StandardCharsets.UTF_8);
+                        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+                        config.setDefaults(defConfig);
 
+                        plugin.saveResource("config.yml", true);
+
+                        config.load(file);
                     }
+                } else {
+                    plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&lHideItem &f| &cYour config file in '/plugins/HideItem/' is outdated. Please update it!"));
                 }
             }
         } catch (IOException | InvalidConfigurationException e) {
@@ -162,7 +156,7 @@ public class HideItemConfig {
         // Setup MySQL if storage method is database
         if(STORAGE_METHOD.equals("mysql")) database = new MySQL(config);
         if(STORAGE_METHOD.equals("sqlite")) database = new SQLite(plugin);
-        if(STORAGE_METHOD.equals("mongodb")) database = new MongoDB(config);
+        //if(STORAGE_METHOD.equals("mongodb")) database = new MongoDB(config);
 
         // Disabled features
         DISABLE_ITEMS = config.getBoolean("disable-items", false);
