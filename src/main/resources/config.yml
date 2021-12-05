@@ -62,7 +62,7 @@ mysql:
 # |                      Here you can specify what item players should have                      | #
 # +----------------------------------------------------------------------------------------------+ #
 
-# Reqiore permission to use items to toggle players (hideitem.toggle)
+# Require permission to use items to toggle players (hideitem.toggle)
 require-permission-for-items: false
 
 # What slot should Hide item be? (Starts at 1 & ends at 9)
