@@ -84,6 +84,11 @@ hide-item:
   lore:
     - "&aClick &7to hide players"
   enchanted: true
+  custom-head:
+    enabled: false
+    mode: "value" # 'value' (custom head texture data from websites like minecraft-heads.com) or 'name' (uses the skin of the specified player)
+    value: ""
+    name: "Notch"
 
 # Settings of item when all players are hidden
 show-item:
@@ -95,6 +100,11 @@ show-item:
   lore:
     - "&aClick &7to show players"
   enchanted: true
+  custom-head:
+    enabled: false
+    mode: "value" # value = custom head texture data (from websites like minecraft-heads.com) or name (uses the skin of the specified player)
+    value: ""
+    name: "Notch"
 
 # +----------------------------------------------------------------------------------------------+ #
 # |                                            MESSAGES                                          | #

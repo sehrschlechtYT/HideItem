@@ -1,5 +1,6 @@
 package yt.sehrschlecht.hideitem.data;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -170,7 +171,17 @@ public class HideItemConfig {
         Material hideMaterial = Material.getMaterial(config.getString("hide-item.material", "GRAY_DYE"));
         if (hideMaterial == null) hideMaterial = Material.GRAY_DYE;
 
-        HIDE_ITEM = new ItemStack(hideMaterial, 1);
+        if(config.getBoolean("hide-item.custom-head.enabled", false)) {
+            if(config.getString("hide-item.custom-head.mode", "value").equalsIgnoreCase("name")) {
+                HIDE_ITEM = SkullCreator.itemFromName(config.getString("hide-item.custom-head.name", "Notch"));
+            } else {
+                HIDE_ITEM = SkullCreator.itemFromBase64(config.getString("hide-item.custom-head.value", ""));
+            }
+        } else {
+            HIDE_ITEM = new ItemStack(hideMaterial, 1);
+        }
+
+
         ItemMeta hideItemMeta = HIDE_ITEM.getItemMeta();
 
         hideItemMeta.setDisplayName(config.getString("hide-item.name", "&eHide Players &7(Shown)").replace("&", "§"));
@@ -195,7 +206,16 @@ public class HideItemConfig {
         Material showMaterial = Material.getMaterial(config.getString("show-item.material", "LIME_DYE"));
         if (showMaterial == null) showMaterial = Material.LIME_DYE;
 
-        SHOW_ITEM = new ItemStack(showMaterial, 1);
+        if(config.getBoolean("show-item.custom-head.enabled", false)) {
+            if(config.getString("show-item.custom-head.mode", "value").equalsIgnoreCase("name")) {
+                SHOW_ITEM = SkullCreator.itemFromName(config.getString("show-item.custom-head.name", "Notch"));
+            } else {
+                SHOW_ITEM = SkullCreator.itemFromBase64(config.getString("show-item.custom-head.value", ""));
+            }
+        } else {
+            SHOW_ITEM = new ItemStack(showMaterial, 1);
+        }
+
         ItemMeta showItemMeta = SHOW_ITEM.getItemMeta();
 
         showItemMeta.setDisplayName(config.getString("show-item.name", "&eHide Players &7(Hidden)").replace("&", "§"));
