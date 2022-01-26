@@ -11,6 +11,7 @@ This plugin was originally created by **qKing12** [Link](https://www.spigotmc.or
 * Support for MongoDB was added
 * All reflection code has been removed to make the plugin compatible with new spigot versions without updating it
 * The minimum server version was changed to 1.14.4
+* Support for custom heads was added
 
 ## API
 
