@@ -1,14 +1,9 @@
 package yt.sehrschlecht.hideitem.events;
 
-import yt.sehrschlecht.hideitem.HideItem;
-import yt.sehrschlecht.hideitem.data.PlayerState;
-import yt.sehrschlecht.hideitem.data.PlayerStateManager;
-import yt.sehrschlecht.hideitem.util.HidingItem;
-import yt.sehrschlecht.hideitem.util.NBTTags;
-import yt.sehrschlecht.hideitem.util.PlayerHiding;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,6 +17,12 @@ import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import yt.sehrschlecht.hideitem.HideItem;
+import yt.sehrschlecht.hideitem.data.PlayerState;
+import yt.sehrschlecht.hideitem.data.PlayerStateManager;
+import yt.sehrschlecht.hideitem.util.HidingItem;
+import yt.sehrschlecht.hideitem.util.NBTTags;
+import yt.sehrschlecht.hideitem.util.PlayerHiding;
 
 import java.util.Arrays;
 import java.util.List;
@@ -130,6 +131,11 @@ public class EventsClass implements Listener {
         iMeta.setDisplayName(name.replace("&", "§"));
 
         hideItem.setItemMeta(iMeta);
+
+        Arrays.stream(player.getInventory().getContents())
+                .filter(item -> item != null && item.getType() != Material.AIR)
+                .filter(item -> NBTTags.getBoolean(item, "HIDE_ITEM") || NBTTags.getBoolean(item, "SHOW_ITEM"))
+                .forEach(item -> player.getInventory().remove(item));
 
         // Give hide / show item to correct slot
         if (plugin.getHideItemConfig().FIRST_FREE_SLOT()) {
